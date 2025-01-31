@@ -6,7 +6,7 @@ import { WeatherComponent } from './weather/weather.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, WeatherComponent], // Importa FormsModule y WeatherComponent
+  imports: [CommonModule, FormsModule, WeatherComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

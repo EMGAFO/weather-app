@@ -6,7 +6,7 @@ import { WeatherService } from '../weather.service';
 @Component({
   selector: 'app-weather',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Importa FormsModule
+  imports: [CommonModule, FormsModule],
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.css']
 })

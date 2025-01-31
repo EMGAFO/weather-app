@@ -6,6 +6,10 @@ interface WeatherResponse {
   main: {
     temp: number;
     humidity: number;
+    pressure: number;
+  };
+  wind: {
+    speed: number;
   };
   weather: {
     description: string;
@@ -18,7 +22,7 @@ interface WeatherResponse {
   providedIn: 'root'
 })
 export class WeatherService {
-  private apiKey = '19ee07984f2eedad4c0c601afe0d0b01'; // Reemplaza con tu API key de OpenWeatherMap
+  private apiKey = '19ee07984f2eedad4c0c601afe0d0b01'; // Reemplaza con tu API key
   private apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
   constructor(private http: HttpClient) {}

@@ -1,26 +1,58 @@
-<div>
-    <h1>Weather App</h1>
-    <input [(ngModel)]="city" placeholder="Ingresa una ciudad" />
-    <button (click)="getWeather()">Obtener Clima</button>
-  
-    <div>
-      <label>
-        <input type="radio" [(ngModel)]="unit" value="metric" /> Celsius / km/h
-      </label>
-      <label>
-        <input type="radio" [(ngModel)]="unit" value="imperial" /> Fahrenheit / mph
-      </label>
-    </div>
-  
-    <div *ngIf="weatherData">
-      <h2>{{ weatherData.name }}</h2>
-      <p>Temperatura: {{ weatherData.main.temp }} {{ unit === 'metric' ? '°C' : '°F' }}</p>
-      <p>Humedad: {{ weatherData.main.humidity }}%</p>
-      <p>Presión: {{ weatherData.main.pressure }} hPa</p>
-      <p>Viento: {{ weatherData.wind.speed }} {{ unit === 'metric' ? 'km/h' : 'mph' }}</p>
-      <p>{{ weatherData.weather[0].description }}</p>
-      <img [src]="'http://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'" alt="Weather icon">
-    </div>
-  
-    <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+<div class="app-container">
+  <h1 class="app-title">Weather App</h1>
+
+  <div class="input-container">
+    <!-- Entrada para la primera ciudad -->
+    <input class="city-input" [(ngModel)]="city1" placeholder="Ingresa la primera ciudad" />
+    <button class="weather-button" (click)="getWeather1()">Obtener Clima</button>
+
+    <!-- Entrada para la segunda ciudad -->
+    <input class="city-input" [(ngModel)]="city2" placeholder="Ingresa la segunda ciudad" />
+    <button class="weather-button" (click)="getWeather2()">Obtener Clima</button>
   </div>
+
+  <!-- Selector de unidad de medida -->
+  <div class="unit-selector">
+    <label class="unit-label">
+      <input type="radio" [(ngModel)]="unit" value="metric" /> Celsius / km/h
+    </label>
+    <label class="unit-label">
+      <input type="radio" [(ngModel)]="unit" value="imperial" /> Fahrenheit / mph
+    </label>
+  </div>
+
+  <!-- Contenedor de ciudades -->
+  <div class="weather-container">
+    <!-- Datos del clima de la primera ciudad -->
+    <div class="weather-box center" *ngIf="weatherData1" [ngStyle]="{'background-image': getBackground(weatherData1.weather[0].main)}">
+      <div class="weather-card">
+        <h2 class="city-name">{{ weatherData1.name }}</h2>
+        <p class="weather-info">Temperatura: {{ weatherData1.main.temp }} {{ unit === 'metric' ? '°C' : '°F' }}</p>
+        <p class="weather-info">Humedad: {{ weatherData1.main.humidity }}%</p>
+        <p class="weather-info">Presión: {{ weatherData1.main.pressure }} hPa</p>
+        <p class="weather-info">Viento: {{ weatherData1.wind.speed }} {{ unit === 'metric' ? 'km/h' : 'mph' }}</p>
+        <p class="weather-description">{{ weatherData1.weather[0].description }}</p>
+        <img class="weather-icon" [src]="'http://openweathermap.org/img/wn/' + weatherData1.weather[0].icon + '@2x.png'" alt="Weather icon">
+      </div>
+    </div>
+    <p class="error-message" *ngIf="errorMessage1">{{ errorMessage1 }}</p>
+
+    <!-- Datos del clima de la segunda ciudad -->
+    <div class="weather-box center" *ngIf="weatherData2" [ngStyle]="{'background-image': getBackground(weatherData2.weather[0].main)}">
+      <div class="weather-card">
+        <h2 class="city-name">{{ weatherData2.name }}</h2>
+        <p class="weather-info">Temperatura: {{ weatherData2.main.temp }} {{ unit === 'metric' ? '°C' : '°F' }}</p>
+        <p class="weather-info">Humedad: {{ weatherData2.main.humidity }}%</p>
+        <p class="weather-info">Presión: {{ weatherData2.main.pressure }} hPa</p>
+        <p class="weather-info">Viento: {{ weatherData2.wind.speed }} {{ unit === 'metric' ? 'km/h' : 'mph' }}</p>
+        <p class="weather-description">{{ weatherData2.weather[0].description }}</p>
+        <img class="weather-icon" [src]="'http://openweathermap.org/img/wn/' + weatherData2.weather[0].icon + '@2x.png'" alt="Weather icon">
+      </div>
+    </div>
+    <p class="error-message" *ngIf="errorMessage2">{{ errorMessage2 }}</p>
+  </div>
+
+  <footer class="footer">
+    <p class="footer-text">Desarrollado por <strong>EMGAFO</strong> | Datos de OpenWeatherMap</p>
+  </footer>
+</div>

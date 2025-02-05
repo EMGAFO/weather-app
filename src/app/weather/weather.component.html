@@ -1,13 +1,40 @@
 <div class="app-container">
   <h1 class="app-title">Weather App</h1>
 
+  <!-- Contenedor de entradas para las ciudades -->
   <div class="input-container">
-    <!-- Entrada para la primera ciudad -->
-    <input class="city-input" [(ngModel)]="city1" placeholder="Ingresa la primera ciudad" />
+    <!-- Entrada para la primera ciudad con autocompletado -->
+    <mat-form-field appearance="fill" class="city-input">
+      <input
+        type="text"
+        matInput
+        [formControl]="city1Control"
+        [matAutocomplete]="autoCity1"
+        placeholder="Selecciona la primera ciudad"
+      />
+      <mat-autocomplete #autoCity1="matAutocomplete" (optionSelected)="onCitySelected($event, 'city1')">
+        <mat-option *ngFor="let city of filteredCities1 | async" [value]="city">
+          {{ city.name }} ({{ city.country }})
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
     <button class="weather-button" (click)="getWeather1()">Obtener Clima</button>
 
-    <!-- Entrada para la segunda ciudad -->
-    <input class="city-input" [(ngModel)]="city2" placeholder="Ingresa la segunda ciudad" />
+    <!-- Entrada para la segunda ciudad con autocompletado -->
+    <mat-form-field appearance="fill" class="city-input">
+      <input
+        type="text"
+        matInput
+        [formControl]="city2Control"
+        [matAutocomplete]="autoCity2"
+        placeholder="Selecciona la segunda ciudad"
+      />
+      <mat-autocomplete #autoCity2="matAutocomplete" (optionSelected)="onCitySelected($event, 'city2')">
+        <mat-option *ngFor="let city of filteredCities2 | async" [value]="city">
+          {{ city.name }} ({{ city.country }})
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
     <button class="weather-button" (click)="getWeather2()">Obtener Clima</button>
   </div>
 
@@ -52,6 +79,7 @@
     <p class="error-message" *ngIf="errorMessage2">{{ errorMessage2 }}</p>
   </div>
 
+  <!-- Footer -->
   <footer class="footer">
     <p class="footer-text">Desarrollado por <strong>EMGAFO</strong> | Datos de OpenWeatherMap</p>
   </footer>

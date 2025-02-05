@@ -1,54 +1,32 @@
 .container {
-    text-align: center;
-    color: white;
+  text-align: center;
+  color: white;
 }
 
 .input-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .unit-selector {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
-.left {
-    text-align: left;
-}
-
-.right {
-    text-align: right;
-}
-
-/* 📌 Contenedor principal */
-/* .weather-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-  } */
-
-  .weather-container {
-    display: flex;
-    justify-content:space-around;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-    min-height: 300px; /* Altura mínima para que no se colapse */
-    background-image: url('/assets/backgrounds/default.jpg'); /* Fondo predeterminado */
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
+.weather-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .weather-box {
@@ -59,69 +37,27 @@
   text-align: center;
 }
 
-.weather-box {
-  margin: 20px 0;
-  width: 45%;
+.weather-card {
+  background: rgba(0, 0, 0, 0.6);
   padding: 20px;
   border-radius: 10px;
-  background-size: cover;
-  background-position: center;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-  
-  /* 📌 Caja de clima con fondo oscuro */
-  .weather-card {
-    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    text-align: center;
-    width: 300px;
-  }
-  
-  /* 📌 Estilos para los inputs y botones */
-  .search-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  input {
-    padding: 10px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-  }
-  
-  button {
-    background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  button:hover {
-    background: linear-gradient(45deg, #ff8e53, #ff6b6b);
-  }
-  
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+  text-align: center;
+  width: 300px;
 }
 
-.app-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+button {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #ff8e53, #ff6b6b);
 }
 
 .footer {

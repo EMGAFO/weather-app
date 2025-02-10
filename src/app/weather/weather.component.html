@@ -41,10 +41,10 @@
   <!-- Selector de unidad de medida -->
   <div class="unit-selector">
     <label class="unit-label">
-      <input type="radio" [(ngModel)]="unit" value="metric" /> Celsius / km/h
+      <input type="radio" [(ngModel)]="unit" value="metric" (change)="updateWeatherUnits()" /> Celsius / km/h
     </label>
     <label class="unit-label">
-      <input type="radio" [(ngModel)]="unit" value="imperial" /> Fahrenheit / mph
+      <input type="radio" [(ngModel)]="unit" value="imperial" (change)="updateWeatherUnits()" /> Fahrenheit / mph
     </label>
   </div>
 

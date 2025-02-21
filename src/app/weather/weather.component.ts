@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext  } from '@angular/core';// Import SecurityContext
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +19,8 @@ import {
   tap,
 } from 'rxjs/operators';
 import { WeatherService } from '../weather.service';
+import { environment } from '@env/environment';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'; // Import DomSanitizer and SafeResourceUrl
 
 @Component({
   selector: 'app-weather',
@@ -45,6 +47,10 @@ export class WeatherComponent implements OnInit {
   selectedCity1: any;
   selectedCity2: any;
 
+  // Propiedades para el modal
+  isModalOpen = false; // Controla si el modal está abierto
+  currentMapUrl: SafeResourceUrl  = ''; // URL del mapa actual
+
   // Controles para el autocompletado
   city1Control = new FormControl();
   city2Control = new FormControl();
@@ -53,7 +59,7 @@ export class WeatherComponent implements OnInit {
   filteredCities1: Observable<any[]> | null = null;
   filteredCities2: Observable<any[]> | null = null;
 
-  constructor(private weatherService: WeatherService) {}
+  constructor(private weatherService: WeatherService, private sanitizer: DomSanitizer) {} // Inject DomSanitizer
 
   ngOnInit(): void {
     this.filteredCities1 = this.city1Control.valueChanges.pipe(
@@ -85,7 +91,6 @@ export class WeatherComponent implements OnInit {
 
   filterCities(value: string): Observable<any[]> {
     const filterValue = value.toLowerCase();
-
     return this.weatherService.getCities(filterValue);
   }
 
@@ -95,10 +100,13 @@ export class WeatherComponent implements OnInit {
       this.errorMessage1 = 'Por favor, ingresa una ciudad válida.';
       return;
     }
-
     this.weatherService.getWeather(this.city1, this.unit).subscribe({
       next: (data) => {
-        this.weatherData1 = data;
+        this.weatherData1 = {
+          ...data,
+          lat: data.coord.lat, // Guardar la latitud
+          lon: data.coord.lon, // Guardar la longitud
+        };
         console.log(JSON.stringify(this.weatherData1));
         this.errorMessage1 = '';
       },
@@ -115,10 +123,13 @@ export class WeatherComponent implements OnInit {
       this.errorMessage2 = 'Por favor, ingresa una ciudad válida.';
       return;
     }
-
     this.weatherService.getWeather(this.city2, this.unit).subscribe({
       next: (data) => {
-        this.weatherData2 = data;
+        this.weatherData2 = {
+          ...data,
+          lat: data.coord.lat, // Guardar la latitud
+          lon: data.coord.lon, // Guardar la longitud
+        };
         this.errorMessage2 = '';
       },
       error: (err) => {
@@ -133,7 +144,6 @@ export class WeatherComponent implements OnInit {
     cityType: 'city1' | 'city2'
   ) {
     const selectedCity = event.option.value;
-
     if (cityType === 'city1') {
       this.city1 = selectedCity.name;
       this.selectedCity1 = selectedCity;
@@ -168,7 +178,7 @@ export class WeatherComponent implements OnInit {
       case 'thunderstorm':
         return "url('assets/backgrounds/storm.jpg')";
       case 'snow':
-      return "url('assets/backgrounds/snowy.jpg')";
+        return "url('assets/backgrounds/snowy.jpg')";
       case 'mist':
       case 'fog':
         return "url('assets/backgrounds/foggy.jpg')";
@@ -184,5 +194,24 @@ export class WeatherComponent implements OnInit {
     if (this.selectedCity2) {
       this.getWeather2();
     }
+  }
+
+  // Método para abrir el modal con el mapa
+  openMapModal(lat: number, lon: number): void {
+    //const url = `https://www.google.com/maps/embed/v1/place?key=${environment.googleMapsApiKey}&q=${lat},${lon}&zoom=12`;
+    const url = `https://www.google.com/maps/embed/v1/place?key=AIzaSyD_E1ATyJecK43SniRDzO9H7tnH9A7FjbE&q=${lat},${lon}&zoom=12`;
+    this.currentMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    this.isModalOpen = true;
+  }
+  
+/*   openMapModal(lat: number, lon: number): void {
+    this.currentMapUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyD_E1ATyJecK43SniRDzO9H7tnH9A7FjbE&q=51.509865,-0.118092&zoom=12`;
+    this.isModalOpen = true;
+  } */
+
+  // Método para cerrar el modal
+  closeMapModal(): void {
+    this.isModalOpen = false;
+    this.currentMapUrl = '';
   }
 }

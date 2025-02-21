@@ -1,5 +1,7 @@
 <div class="app-container">
-  <h1 class="app-title">Weather App</h1>
+  <div class="header ">
+    <h1 class="app-title">City Weather</h1>
+  </div>
 
   <!-- Contenedor de entradas para las ciudades -->
   <div class="input-container">
@@ -41,10 +43,10 @@
   <!-- Selector de unidad de medida -->
   <div class="unit-selector">
     <label class="unit-label">
-      <input type="radio" [(ngModel)]="unit" value="metric" (change)="updateWeatherUnits()" /> Celsius / km/h
+      <input type="radio" [(ngModel)]="unit" value="metric" (change)="updateWeatherUnits()" /> Celsius/ km/h
     </label>
     <label class="unit-label">
-      <input type="radio" [(ngModel)]="unit" value="imperial" (change)="updateWeatherUnits()" /> Fahrenheit / mph
+      <input type="radio" [(ngModel)]="unit" value="imperial" (change)="updateWeatherUnits()" /> Fahrenheit/ mph
     </label>
   </div>
 
@@ -53,7 +55,11 @@
     <!-- Datos del clima de la primera ciudad -->
     <div class="weather-box center" *ngIf="weatherData1" [ngStyle]="{'background-image': getBackground(weatherData1.weather[0].main)}">
       <div class="weather-card">
-        <h2 class="city-name">{{ weatherData1.name }}</h2>
+        <h2 class="city-name">
+          <img src="https://flagsapi.com/{{weatherData1.sys.country}}/flat/24.png" alt="">
+          {{ weatherData1.name }}
+          <button class="map-button" (click)="openMapModal(weatherData1.coord.lat, weatherData1.coord.lon)">Ver Mapa</button>
+        </h2>
         <p class="weather-info">Temperatura: {{ weatherData1.main.temp }} {{ unit === 'metric' ? '°C' : '°F' }}</p>
         <p class="weather-info">Humedad: {{ weatherData1.main.humidity }}%</p>
         <p class="weather-info">Presión: {{ weatherData1.main.pressure }} hPa</p>
@@ -67,7 +73,11 @@
     <!-- Datos del clima de la segunda ciudad -->
     <div class="weather-box center" *ngIf="weatherData2" [ngStyle]="{'background-image': getBackground(weatherData2.weather[0].main)}">
       <div class="weather-card">
-        <h2 class="city-name">{{ weatherData2.name }}</h2>
+        <h2 class="city-name">
+          <img src="https://flagsapi.com/{{weatherData2.sys.country}}/flat/24.png" alt="">
+          {{ weatherData2.name }}
+          <button class="map-button" (click)="openMapModal(weatherData2.coord.lat, weatherData2.coord.lon)">Ver Mapa</button>
+        </h2>
         <p class="weather-info">Temperatura: {{ weatherData2.main.temp }} {{ unit === 'metric' ? '°C' : '°F' }}</p>
         <p class="weather-info">Humedad: {{ weatherData2.main.humidity }}%</p>
         <p class="weather-info">Presión: {{ weatherData2.main.pressure }} hPa</p>
@@ -79,8 +89,33 @@
     <p class="error-message" *ngIf="errorMessage2">{{ errorMessage2 }}</p>
   </div>
 
+  <!-- Modal para mostrar el mapa -->
+  <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeMapModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <span class="close" (click)="closeMapModal()">&times;</span>
+<!--       <iframe
+        width="100%"
+        height="450"
+        style="border:0"
+        [src]="currentMapUrl"
+        allowfullscreen>
+      </iframe> -->
+    <iframe
+      width="100%"
+      height="450"
+      style="border:0"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      [src]="currentMapUrl">
+    </iframe>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="footer">
-    <p class="footer-text">Desarrollado por <strong>EMGAFO</strong> | Datos de OpenWeatherMap</p>
+    <p class="footer-text">
+      Desarrollado por <strong>EMGAFO</strong> | Datos de OpenWeatherMap
+    </p>
   </footer>
 </div>

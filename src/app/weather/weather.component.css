@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -24,9 +25,11 @@
 .weather-container {
   display: flex;
   justify-content: space-around;
-  gap: 20px;
+  gap: 10px;
   flex-wrap: wrap;
   margin-top: 20px;
+  padding: 20px;
+  /* background-color: #ff6b6b; */
 }
 
 .weather-box {
@@ -46,6 +49,22 @@
   width: 300px;
 }
 
+/* Media query for tablets and smaller screens (up to 768px width) */
+@media (max-width: 768px) {
+  .weather-card {
+    width: 80%; /* Occupy full width of the container */
+    max-width: 400px; /* Optional: Limit the maximum width on larger tablets */
+    margin: 0 auto; /* Center the card horizontally */
+  }
+}
+
+/* Media query for mobile devices (up to 480px width) */
+@media (max-width: 480px) {
+  .weather-card {
+    padding: 15px; /* Reduce padding for smaller screens */
+  }
+}
+
 button {
   background: linear-gradient(45deg, #ff6b6b, #ff8e53);
   color: white;
@@ -61,7 +80,93 @@ button:hover {
 }
 
 .footer {
+  /* position: fixed; */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* //// city map button */
+
+.map-button {
+  background: linear-gradient(45deg, #4285f4, #34a853);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 0.3s;
+}
+
+.map-button:hover {
+  background: linear-gradient(45deg, #34a853, #4285f4);
+}
+
+
+/* ///////Modal/////////// */
+
+/* Estilo para el fondo oscuro del modal */
+.modal-overlay {
   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro con transparencia */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que el modal esté sobre otros elementos */
+}
+
+/* Estilo para el contenido del modal */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón de cierre del modal */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+}
+
+.close:hover {
+  color: red;
+}
+
+/* //////////titulo de la ::-webkit-validation-bubble-arrow-clipper*/
+
+.header {
+  background-color: #333;
+  color: white;
+  margin-top: 0;
+  width: 100%;
+  padding: 4px;
+}
+
+.app-title {
+  margin-left: 20px;
+}
+
+
+.footer {
+  /* position: fixed; */
   bottom: 0;
   left: 0;
   width: 100%;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext  } from '@angular/core';// Import SecurityContext
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,6 +20,7 @@ import {
 } from 'rxjs/operators';
 import { WeatherService } from '../weather.service';
 import { environment } from '@env/environment';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'; // Import DomSanitizer and SafeResourceUrl
 
 @Component({
   selector: 'app-weather',
@@ -48,7 +49,7 @@ export class WeatherComponent implements OnInit {
 
   // Propiedades para el modal
   isModalOpen = false; // Controla si el modal está abierto
-  currentMapUrl = ''; // URL del mapa actual
+  currentMapUrl: SafeResourceUrl  = ''; // URL del mapa actual
 
   // Controles para el autocompletado
   city1Control = new FormControl();
@@ -58,7 +59,7 @@ export class WeatherComponent implements OnInit {
   filteredCities1: Observable<any[]> | null = null;
   filteredCities2: Observable<any[]> | null = null;
 
-  constructor(private weatherService: WeatherService) {}
+  constructor(private weatherService: WeatherService, private sanitizer: DomSanitizer) {} // Inject DomSanitizer
 
   ngOnInit(): void {
     this.filteredCities1 = this.city1Control.valueChanges.pipe(
@@ -197,9 +198,16 @@ export class WeatherComponent implements OnInit {
 
   // Método para abrir el modal con el mapa
   openMapModal(lat: number, lon: number): void {
-    this.currentMapUrl = `https://www.google.com/maps/embed/v1/place?key=${environment.googleMapsApiKey}&q=${lat},${lon}&zoom=12`;
+    //const url = `https://www.google.com/maps/embed/v1/place?key=${environment.googleMapsApiKey}&q=${lat},${lon}&zoom=12`;
+    const url = `https://www.google.com/maps/embed/v1/place?key=AIzaSyD_E1ATyJecK43SniRDzO9H7tnH9A7FjbE&q=${lat},${lon}&zoom=12`;
+    this.currentMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     this.isModalOpen = true;
   }
+  
+/*   openMapModal(lat: number, lon: number): void {
+    this.currentMapUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyD_E1ATyJecK43SniRDzO9H7tnH9A7FjbE&q=51.509865,-0.118092&zoom=12`;
+    this.isModalOpen = true;
+  } */
 
   // Método para cerrar el modal
   closeMapModal(): void {

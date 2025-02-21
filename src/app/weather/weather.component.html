@@ -1,5 +1,7 @@
 <div class="app-container">
-  <h1 class="app-title">Weather App</h1>
+  <div class="header ">
+    <h1 class="app-title">City Weather</h1>
+  </div>
 
   <!-- Contenedor de entradas para las ciudades -->
   <div class="input-container">
@@ -54,6 +56,7 @@
     <div class="weather-box center" *ngIf="weatherData1" [ngStyle]="{'background-image': getBackground(weatherData1.weather[0].main)}">
       <div class="weather-card">
         <h2 class="city-name">
+          <img src="https://flagsapi.com/{{weatherData1.sys.country}}/flat/24.png" alt="">
           {{ weatherData1.name }}
           <button class="map-button" (click)="openMapModal(weatherData1.coord.lat, weatherData1.coord.lon)">Ver Mapa</button>
         </h2>
@@ -71,6 +74,7 @@
     <div class="weather-box center" *ngIf="weatherData2" [ngStyle]="{'background-image': getBackground(weatherData2.weather[0].main)}">
       <div class="weather-card">
         <h2 class="city-name">
+          <img src="https://flagsapi.com/{{weatherData2.sys.country}}/flat/24.png" alt="">
           {{ weatherData2.name }}
           <button class="map-button" (click)="openMapModal(weatherData2.coord.lat, weatherData2.coord.lon)">Ver Mapa</button>
         </h2>
@@ -89,13 +93,22 @@
   <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeMapModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <span class="close" (click)="closeMapModal()">&times;</span>
-      <iframe
+<!--       <iframe
         width="100%"
         height="450"
         style="border:0"
         [src]="currentMapUrl"
         allowfullscreen>
-      </iframe>
+      </iframe> -->
+    <iframe
+      width="100%"
+      height="450"
+      style="border:0"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      [src]="currentMapUrl">
+    </iframe>
     </div>
   </div>
 
